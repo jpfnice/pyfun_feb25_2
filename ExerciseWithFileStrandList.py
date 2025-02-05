@@ -25,3 +25,12 @@ Create a list Y2 that will contain the sine of each value stored in X2
 Once the 4 lists will be created I will show you how to plot the corresponding points (X1,Y1, X2,Y2).
 """
 
+X1=[]
+X2=[]
+
+myfile=open("data.txt")
+
+for line in myfile:
+    print(line) 
+    
+myfile.close()
