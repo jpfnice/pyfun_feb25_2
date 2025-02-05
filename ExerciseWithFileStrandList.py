@@ -25,12 +25,72 @@ Create a list Y2 that will contain the sine of each value stored in X2
 Once the 4 lists will be created I will show you how to plot the corresponding points (X1,Y1, X2,Y2).
 """
 
+import math
+
 X1=[]
 X2=[]
+Y1=[] # Will be the cosine of X1
+Y2=[] # Will be the sine of X2
 
-myfile=open("data.txt")
+dataFile=open("data.txt") # a file Object is iterable
 
-for line in myfile:
-    print(line) 
+for line in dataFile:
+    # line= "   x1:0.34;x2:0.56\n" 
+    line=line.replace(":", ";")
+    # line= "   x1;0.34;x2;0.56\n" 
+    result=line.split(";")
+    # result = ['  x1', '0.34', 'x2', '0.56\n']
     
-myfile.close()
+    if len(result) == 4:
+        v1=float(result[1])
+        #secondValue=result[3].strip("\n") # '0.56\n'
+        v2=float(result[3]) # '0.56'
+        X1.append(v1) 
+        X2.append(v2) 
+    else:
+        print("The line:", line, "does not have the expected format!")
+
+dataFile.close()
+
+
+for e in X1:
+    Y1.append(math.cos(e))
+    
+for e in X2:
+    Y2.append(math.sin(e))
+    
+print("X1:", X1)
+print("X2:", X2)
+
+print("Y1:", Y1)
+
+# To have a better control on the way the elements of Y1 are formatted:
+    
+print("Y1", end=':')
+for e in Y1[0:-1]:
+    print(f" {e:.2f}", end=",")
+print(f"{Y1[-1]:.2f}")    
+
+print("Y2:", Y2)
+
+#To plot the corresponding points:
+    
+import matplotlib.pyplot as plt
+
+# 1 figure  is composed of 1 to n axes
+# You a plot a shart in one axes or another
+
+fig=plt.figure()
+ax1=fig.add_subplot(2,2,1)
+ax2=fig.add_subplot(2,2,4)
+ax1.plot(X1,Y1)
+ax2.plot(X2,Y2)
+plt.show()
+
+# plt.plot(X1,Y1,".",  label="Cosine")
+# plt.plot(X2,Y2, ".", label="Sine")
+# plt.legend()
+# plt.show()
+
+
+
